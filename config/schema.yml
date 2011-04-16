@@ -1,0 +1,11 @@
+propel:
+  firm:
+    _attributes: { phpName: Firm }
+    id:
+    name: { type: varchar(50) }
+  user:
+    _attributes: { phpName: User }
+    id:
+    firm_id: {type: integer, required: true, foreignTable: firm, foreignReference: id, default: 0, onDelete: cascade }
+    name: { type: varchar(50), index: true, required: true }
+    profile: { type: longvarchar }
