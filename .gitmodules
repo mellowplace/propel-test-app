@@ -1,0 +1,6 @@
+[submodule "plugins/sfMinaclPropelPlugin"]
+	path = plugins/sfMinaclPropelPlugin
+	url = git@github.com:mellowplace/sfMinaclPropelPlugin.git
+[submodule "plugins/sfMinaclPlugin"]
+	path = plugins/sfMinaclPlugin
+	url = git@github.com:mellowplace/sfMinaclPlugin.git
