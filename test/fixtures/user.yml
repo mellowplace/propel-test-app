@@ -1,0 +1,11 @@
+Firm:
+  my_firm:
+    id:
+    name: My Test Firm
+ 
+User:
+  user1:
+    id:
+    firm_id: my_firm
+    name: Rob Graham
+    profile: PHP Developer and all round good guy ...

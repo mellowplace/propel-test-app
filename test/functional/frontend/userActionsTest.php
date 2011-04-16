@@ -29,5 +29,48 @@
  */
 require_once dirname(__FILE__) . '/../../bootstrap/functional.php';
 
+$loader = new sfPropelData();
+$loader->loadData(sfConfig::get('sf_test_dir').'/fixtures/user.yml');
+
+$browser = new sfTestBrowser();
+$t = $browser->test();
+
+/*
+ * remove the forms and module generation prior to regenerating
+ */
+$t->info('Removing and regenerating forms...');
 cleanForms();
 buildForms();
+
+$t->info('Removing and regenerating the user module...');
+cleanModule('frontend', 'user');
+generateModule('frontend', 'user', 'User');
+
+/*
+ * check the actions, index first...
+ */
+$browser->get('/user')->
+	with('response')->begin()->
+		isStatusCode(200)->
+		checkElement('table td:contains("Rob Graham")', 1)->
+		checkElement('table td:contains("PHP Developer and all round good guy ...")', 1)->
+	end()->
+	with('request')->begin()->
+		isParameter('module', 'user')->
+		isParameter('action', 'index')->
+	end();
+
+$user = UserPeer::getByName('Rob Graham');
+/*
+ * now try to edit...
+ */
+$browser->click($user->getId())->
+	with('response')->begin()->
+		isStatusCode(200)->
+		checkElement('table td:contains("Rob Graham")', 1)->
+		checkElement('table td:contains("PHP Developer and all round good guy ...")', 1)->
+	end()->
+	with('request')->begin()->
+		isParameter('module', 'user')->
+		isParameter('action', 'edit')->
+	end();

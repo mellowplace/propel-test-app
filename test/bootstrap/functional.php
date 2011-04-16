@@ -75,7 +75,7 @@ function generateModule($app, $module, $modelClass)
  */
 function cleanModule($app, $module)
 {
-	$moduleDir = sfConfig::get('sf_root_dir') . '/'.$app.'/modules/'.$module;
+	$moduleDir = sfConfig::get('sf_root_dir') . '/apps/'.$app.'/modules/'.$module;
 	
 	$fileManager = new sfFileSystem(sfContext::getInstance()->getEventDispatcher(), new sfAnsiColorFormatter());
 	$fileManager->remove(array_merge(

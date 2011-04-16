@@ -16,6 +16,19 @@
  *
  * @package    lib.model
  */
-class UserPeer extends BaseUserPeer {
-
+class UserPeer extends BaseUserPeer 
+{
+	/**
+	 * Gets a user from their name
+	 * 
+	 * @param string $name
+	 * @return User
+	 */
+	public static function getByName($name)
+	{
+		$c = new Criteria();
+		$c->add(self::NAME, $name);
+		
+		return self::doSelectOne($c);
+	}
 } // UserPeer

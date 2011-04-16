@@ -24,9 +24,7 @@ all:
     class:        sfPropelDatabase
     param:
       classname:  PropelPDO
-      dsn:        mysql:dbname=test;host=localhost
-      username:   root
-      password:   
+      dsn:        'sqlite:%SF_DATA_DIR%/test.db'
       encoding:   utf8
       persistent: true
       pooling:    true
