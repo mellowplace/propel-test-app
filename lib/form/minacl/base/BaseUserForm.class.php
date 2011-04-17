@@ -10,6 +10,13 @@
  */
 abstract class BaseUserForm extends BaseFormMinaclPropel
 {
+	public function preInitialize()
+	{
+		parent::preInitialize();
+		$firm_id = new sfMinaclPropelChooser('firm_id', 'propelSingleSelect', 'Firm');
+		$this->addForm($firm_id);
+	}
+	
 	public function postInitialize()
 	{
 		parent::postInitialize();
@@ -17,16 +24,16 @@ abstract class BaseUserForm extends BaseFormMinaclPropel
 		 * Validators for the ID column
 		 */
 		$id1 = new phNumericValidator();
-		$id1->min(-2147483648)->max(2147483647);
+		$id1->decimal(false)->min(-2147483648)->max(2147483647);
 		$this->id->setValidator($id1);
 		/*
 		 * Validators for the FIRM_ID column
 		 */
 		$firm_id1 = new phNumericValidator();
-		$firm_id1->min(-2147483648)->max(2147483647);
+		$firm_id1->decimal(false)->min(-2147483648)->max(2147483647);
 		$firm_id2 = new phRequiredValidator();
-		$firm_id3 = new sfMinaclPropelChoiceValidator();
-		$firm_id3->setMultiple(false)->setModel('Firm');
+		$firm_id3 = new sfMinaclPropelChoiceValidator('Firm');
+		$firm_id3->setMultiple(false);
 		$this->firm_id->setValidator(new phValidatorLogic($firm_id1))->
 			and_($firm_id2)->		
 			and_($firm_id3);		

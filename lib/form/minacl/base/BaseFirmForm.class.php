@@ -10,6 +10,11 @@
  */
 abstract class BaseFirmForm extends BaseFormMinaclPropel
 {
+	public function preInitialize()
+	{
+		parent::preInitialize();
+	}
+	
 	public function postInitialize()
 	{
 		parent::postInitialize();
@@ -17,7 +22,7 @@ abstract class BaseFirmForm extends BaseFormMinaclPropel
 		 * Validators for the ID column
 		 */
 		$id1 = new phNumericValidator();
-		$id1->min(-2147483648)->max(2147483647);
+		$id1->decimal(false)->min(-2147483648)->max(2147483647);
 		$this->id->setValidator($id1);
 		/*
 		 * Validators for the NAME column

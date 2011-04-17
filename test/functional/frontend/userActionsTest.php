@@ -67,8 +67,13 @@ $user = UserPeer::getByName('Rob Graham');
 $browser->click($user->getId())->
 	with('response')->begin()->
 		isStatusCode(200)->
-		checkElement('table td:contains("Rob Graham")', 1)->
-		checkElement('table td:contains("PHP Developer and all round good guy ...")', 1)->
+		checkElement('label[for="user_name"]', 'Name')->
+		checkElement('label[for="user_firm_id"]', 'Firm')->
+		checkElement('label[for="user_profile"]', 'Profile')->
+		checkElement('input[value="Rob Graham"]', 1)->
+		checkElement('textarea#user_profile', 'PHP Developer and all round good guy ...')->
+		checkElement('select#user_firm_id option', 1)->
+		checkElement('select#user_firm_id option', 'My Test Firm')->
 	end()->
 	with('request')->begin()->
 		isParameter('module', 'user')->

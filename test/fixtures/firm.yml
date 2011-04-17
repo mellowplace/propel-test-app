@@ -1,0 +1,11 @@
+# A load of test firms to try out the sfMinaclPropelChoiceValidator with
+Firm:
+  firm1:
+    id:
+    name: Firm 1
+  firm2:
+    id:
+    name: Firm 2
+  firm3:
+    id:
+    name: Firm 3
