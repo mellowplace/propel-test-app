@@ -4,7 +4,7 @@
  */
 ?>
 <tr>
-	<th><label for="<?php echo $this->id('firm_id.list') ?>">Firm id</label></th>
+	<th><label for="<?php echo $this->id('firm_id.list') ?>">Firm</label></th>
 	<td><?php echo $this->form('firm_id') ?></td>
 </tr>
 <tr>

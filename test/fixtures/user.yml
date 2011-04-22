@@ -2,6 +2,9 @@ Firm:
   my_firm:
     id:
     name: My Test Firm
+  another_firm:
+    id:
+    name: Another Firm
  
 User:
   user1:

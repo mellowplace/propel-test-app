@@ -16,6 +16,10 @@
  *
  * @package    lib.model
  */
-class Firm extends BaseFirm {
-
+class Firm extends BaseFirm 
+{
+	public function __toString()
+	{
+		return $this->getName();
+	}
 } // Firm
