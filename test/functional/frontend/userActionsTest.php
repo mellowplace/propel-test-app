@@ -166,3 +166,20 @@ $browser->click('Back to list')->click('New')->
 		// 0 interests should be selected
 		checkElement('select#user_user_interest_list_list option[selected="selected"]', 0)->
 	end();
+	
+/*
+ * Now delete the User
+ */
+$browser->click('Delete', array(), array('method' => 'delete', '_with_csrf' => true))->
+	with('request')->begin()->
+		isParameter('module', 'user')->
+		isParameter('action', 'delete')->
+	end()->
+	followRedirect()-> //back to list
+	with('response')->begin()->
+		/*
+		 * check John is still there but New User isnt
+		 */
+		checkElement('table td:contains("John Smith")', 1)->
+		checkElement('table td:contains("New User")', 0)->
+	end();
