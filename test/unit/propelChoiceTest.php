@@ -38,7 +38,7 @@ $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures/firm.yml');
 
 $firms = FirmPeer::doSelect(new Criteria());
 
-$t = new lime_test(9);
+$t = new lime_test(11);
 
 // test creare on non-existant model throws exception
 try
@@ -82,12 +82,12 @@ catch(phValidatorException $e)
 	$t->pass('Passing a value that isnt an array for multi-choice error\'d');
 }
 // test invalid choice
-$v->validate(array($firms[0]->getId(), '9999'), $errors);
+$t->is($v->validate(array($firms[0]->getId(), '9999'), $errors), false, 'Non-existant id fails');
 $t->is(sizeof($errors), 1, 'Non-existant id returned 1 error');
 $t->is($errors[0]->getCode(), sfMinaclPropelChoiceValidator::INVALID, 'Error code was invalid');
 $errors->resetErrors();
 // test valid choice
-$v->validate(array($firms[0]->getId()), $errors);
+$t->ok($v->validate(array($firms[0]->getId()), $errors), 'Valid id validates ok');
 $t->is(sizeof($errors), 0, 'Valid id was ok');
 $errors->resetErrors();
 // test multiple valid

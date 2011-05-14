@@ -79,3 +79,35 @@ $browser->click($user->getId())->
 		isParameter('module', 'user')->
 		isParameter('action', 'edit')->
 	end();
+/*
+ * update the user
+ */
+$c = new Criteria();
+$c->add(FirmPeer::NAME, 'Another Firm');
+$newFirm = FirmPeer::doSelectOne($c);
+$browser->click('Save', array(
+		'user' => array(
+			'firm_id' => array('list' => $newFirm->getId()),
+			'name' => 'John Smith',
+			'profile' => 'Makes beer'
+		)
+	))->
+	with('request')->begin()->
+		isParameter('module', 'user')->
+		isParameter('action', 'update')->
+	end()->
+	followRedirect()-> // to user/edit
+	with('response')->begin()->
+		isStatusCode(200)->
+		/*
+		 * check values where updated
+		 */
+		checkElement('input[value="John Smith"]', 1)->
+		checkElement('textarea#user_profile', 'Makes beer')->
+		checkElement('select#user_firm_id_list option', 2)->
+		checkElement('select#user_firm_id_list option[selected="selected"]', 'Another Firm')->
+	end()->
+	with('request')->begin()->
+		isParameter('module', 'user')->
+		isParameter('action', 'edit')->
+	end();
