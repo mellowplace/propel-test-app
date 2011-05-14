@@ -15,6 +15,8 @@ abstract class BaseUserForm extends BaseFormMinaclPropel
 		parent::preInitialize();
 		$firm_id = new sfMinaclPropelChooser('firm_id', 'propelSingleSelect', 'Firm');
 		$this->addForm($firm_id);
+		$user_interest_list = new sfMinaclPropelChooser('user_interest_list', 'propelMultiSelect', 'Interest');
+		$this->addForm($user_interest_list);
 	}
 	
 	public function postInitialize()
@@ -50,6 +52,12 @@ abstract class BaseUserForm extends BaseFormMinaclPropel
 		 */
 		$profile1 = new phStringLengthValidator();
 		$this->profile->setValidator($profile1);
+		/*
+		 * Validators for the UserInterest many 2 many table
+		 */
+		$user_interest_list = new sfMinaclPropelChoiceValidator('Interest');
+		$user_interest_list->setMultiple(true);
+		$this->user_interest_list->setValidator($user_interest_list);
 	}
 
 	public function getModelName()
@@ -57,5 +65,66 @@ abstract class BaseUserForm extends BaseFormMinaclPropel
 		return 'User';
 	}
 
+
+  public function updateDefaultsFromObject()
+  {
+    parent::updateDefaultsFromObject();
+
+    if ($this->getView()->hasData('user_interest_list'))
+    {
+      $values = array();
+      foreach ($this->object->getUserInterests() as $obj)
+      {
+        $values[] = $obj->getInterestId();
+      }
+
+      $this->user_interest_list->bind($values);
+    }
+
+  }
+
+  protected function saveObject($con)
+  {
+    $object = parent::saveObject($con);
+
+    $this->saveUserInterestList($con);
+    
+    return $object;
+  }
+
+  public function saveUserInterestList($con = null)
+  {
+    if (!$this->isValid())
+    {
+      throw $this->getErrorSchema();
+    }
+
+    if (!$this->getView()->hasData('user_interest_list'))
+    {
+      // somebody has unset this widget
+      return;
+    }
+
+    if (null === $con)
+    {
+      $con = $this->getConnection();
+    }
+
+    $c = new Criteria();
+    $c->add(UserInterestPeer::USER_ID, $this->object->getPrimaryKey());
+    UserInterestPeer::doDelete($c, $con);
+
+    $values = $this->user_interest_list->getValue();
+    if (is_array($values))
+    {
+      foreach ($values as $value)
+      {
+        $obj = new UserInterest();
+        $obj->setUserId($this->object->getPrimaryKey());
+        $obj->setInterestId($value);
+        $obj->save();
+      }
+    }
+  }
 
 }

@@ -5,10 +5,26 @@ Firm:
   another_firm:
     id:
     name: Another Firm
- 
+
+Interest:
+  cricket:
+    id:
+    name: Cricket
+  sewing:
+    id:
+    name: Sewing
+  cheese:
+    id:
+    name: Cheese
+    
 User:
   user1:
     id:
     firm_id: my_firm
     name: Rob Graham
     profile: PHP Developer and all round good guy ...
+    
+UserInterest:
+  user1_cheese:
+    user_id: user1
+    interest_id: cheese

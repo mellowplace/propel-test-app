@@ -9,3 +9,11 @@ propel:
     firm_id: {type: integer, required: true, foreignTable: firm, foreignReference: id, default: 0, onDelete: cascade }
     name: { type: varchar(50), index: true, required: true }
     profile: { type: longvarchar }
+  interest:
+    _attributes: { phpName: Interest }
+    id:
+    name: { type: varchar(50), index: true, required: true }
+  user_interest:
+    _attributes: { phpName: UserInterest }
+    user_id: {primaryKey: true, type: integer, required: true, foreignTable: user, foreignReference: id, default: 0, onDelete: cascade }
+    interest_id: {primaryKey: true, type: integer, required: true, foreignTable: interest, foreignReference: id, default: 0, onDelete: cascade }

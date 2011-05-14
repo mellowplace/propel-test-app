@@ -12,6 +12,7 @@
 			value=""
 			maxlength="50"
 		/>
+		<?php echo $this->errorList('name'); ?>
 	</td>
 </tr>
 <tr style="display: none;">
@@ -19,5 +20,6 @@
 		<input 	type="hidden" 
 			id="<?php echo $this->id('id') ?>"
 			name="<?php echo $this->name('id') ?>" />
+		<?php echo $this->errorList('id'); ?>
 	</td>
 </tr>
